@@ -1,0 +1,1509 @@
+
+ *{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --primary-text-color: #4e3b31; /* Color marrón oscuro para el texto principal */
+  --secondary-text-color: #a0522d; /* Color marrón medio para enlaces/hover */
+  --background-color: #f5f5dc; /* Color beige claro para el fondo */
+  --header-background: #e8d8c3; /* Color beige más oscuro para el encabezado */
+  --border-color: #d2b48c; /* Color marrón claro para bordes */
+  --card-background:#E4D5C7; /* Crema avellana - Modo claro */
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --footer-background: #d8cfc4; /* Color beige claro para el pie de página */
+  /* Variables adicionales para la sección de servicios/cards */
+  --light-bg-color: #f9f2abf6; /* Fondo claro para la sección de servicios */
+  --primary-color: #a0522d; /* Color marrón medio para botones/títulos en tarjetas */
+  --white-color: #ffffff; /* Color de texto en botones */
+  --dark-grey: #4e3b31; /* Color marrón oscuro para títulos de tarjetas */
+  --text-color: #5b3a29; /* Color marrón para texto de párrafos */
+  --secondary-color: #8b4513; /* Color marrón oscuro para hover de botones */
+}
+
+/* Modo Oscuro - Variables */
+body.dark-mode {
+  --primary-text-color: #f5f5dc; /* Texto crema claro en modo oscuro */
+  --secondary-text-color: #d2b48c; /* Color crema medio para acentos en modo oscuro */
+  --background-color: #1a1a1a; /* Fondo oscuro */
+  --header-background: #222; /* Fondo oscuro para el encabezado */
+  --border-color: #444; /* Color oscuro para bordes */
+  --card-background: #333; /* Fondo oscuro para tarjetas */
+  --shadow-color: rgba(0, 0, 0, 0.4);
+  --footer-background: #222; /* Fondo oscuro para el pie de página */
+  /* Modo oscuro para variables adicionales */
+  --light-bg-color: #2a2a2a; /* Fondo oscuro para secciones */
+  --primary-color: #d2b48c; /* Color crema medio para botones/títulos en tarjetas */
+  --white-color: #1a1a1a; /* Color de texto en botones */
+  --dark-grey: #f5f5dc; /* Color crema claro para títulos de tarjetas */
+  --text-color: #ccc; /* Color claro para texto */
+  --secondary-color: #d2b48c; /* Color crema medio para hover de botones */
+}
+
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  color: var(--primary-text-color); /* Usa la variable */
+  line-height: 1.6;
+  background: var(--background-color); /* Usa la variable */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave */
+}
+
+header {
+  background: var(--header-background); /* Usa la variable */
+  border-bottom: 1px solid var(--border-color); /* Usa la variable */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex; /* Añade flexbox al header */
+  justify-content: space-between; /* Distribuye espacio entre logo y botón/nav */
+  align-items: center; /* Alinea verticalmente */
+  padding: 1rem; /* Asegura padding en el header */
+}
+
+.logo img {
+  height: 40px; /* Por ejemplo, un alto de 40px para la imagen del logo */
+  width: auto; /* Mantener la proporción */
+  display: block; /* Asegura que la imagen no tenga espacio extra por línea base */
+}
+
+/* Modifica la regla para móviles para que el menú y el botón se posicionen correctamente */
+nav {
+  display: none; /* Por defecto para móvil */
+}
+
+/* Para el botón del menú, asegúrate de que esté visible en móvil */
+#menu-btn {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  display: block; /* Asegura que el botón se muestre en móvil */
+  color: var(--primary-text-color); /* Color para el icono del menú */
+}
+
+/* Estilos del botón de modo oscuro */
+#dark-mode-toggle {
+  background: none;
+  border: none;
+  font-size: 1.8rem; /* Tamaño del icono */
+  cursor: pointer;
+  color: var(--primary-text-color); /* Color del icono, cambia con el tema */
+  transition: color 0.3s ease;
+  padding: 0.5rem;
+  display: block; /* Asegura que siempre esté visible en móvil si la nav está abierta */
+}
+
+#dark-mode-toggle:hover {
+  color: var(--secondary-text-color); /* Color al pasar el ratón */
+}
+
+/* Media Queries para Desktop y Tablet */
+@media(min-width: 768px) {
+  nav {
+    display: flex !important; /* Cambiado a flex para alinear ul y botón */
+    align-items: center; /* Alinea verticalmente los elementos dentro de nav */
+  }
+  nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding: 0; /* No '1', debe ser '0' o '1rem' */
+  }
+  #menu-btn {
+    display: none;
+  }
+  #dark-mode-toggle { /* Estilos para el botón de modo oscuro en desktop */
+    margin-left: 1rem; /* Espacio a la izquierda para separarlo del nav ul */
+  }
+
+  .grid-features {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .services {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .premios {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Estilos para el menú móvil cuando está abierto */
+nav.open {
+  display: flex; /* Cambiado a flex para apilar elementos */
+  flex-direction: column; /* Apila los elementos verticalmente */
+  animation: fadeIn 0.3s ease-in-out;
+  background: var(--header-background); /* Fondo del menú abierto */
+  position: absolute;
+  top: 100%; /* Debajo del header */
+  left: 0;
+  width: 100%;
+  padding: 1rem;
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+nav.open ul {
+  flex-direction: column; /* Asegura que los items del UL también se apilen */
+  width: 100%; /* Ocupa todo el ancho disponible */
+  padding: 0; /* Asegura que no haya padding extra en el ul del menú abierto */
+}
+
+nav.open li {
+  margin: 0.5rem 0;
+  text-align: center; /* Centra los items del menú móvil */
+}
+
+nav.open #dark-mode-toggle { /* Estilos para el botón en el menú móvil abierto */
+  margin-top: 1rem;
+  margin-left: auto; /* Centrar o ajustar según preferencia */
+  margin-right: auto;
+}
+
+/* Estilos de los elementos de navegación */
+nav ul {
+  list-style: none; /* Asegúrate de que esta línea esté presente y correcta */
+  padding: 1rem; /* Puedes ajustar este padding según el diseño general */
+}
+
+nav ul li a i {
+    margin-right: 8px; /* Espacio entre el ícono y el texto */
+    color: var(--primary-text-color); /* Asegura que el ícono tenga el color del texto */
+}
+
+/* Para asegurar que los iconos tengan el mismo tamaño en dispositivos móviles */
+@media (max-width: 767px) {
+    nav.open ul li a i {
+        font-size: 1.2rem; /* Ajusta el tamaño si es necesario para móvil */
+    }
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--primary-text-color); /* Usa la variable */
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: var(--secondary-text-color); /* Usa la variable */
+}
+
+.container {
+  max-width: auto; /* Puedes cambiar esto a un valor fijo como 1200px para centrar el contenido */
+  margin: auto;
+  padding: 1rem;
+}
+
+.grid-features {
+  display: grid;
+  gap: 1rem;
+}
+
+.feature {
+  background: var(--card-background); /* Usa la variable */
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px var(--shadow-color); /* Usa la variable */
+  transition: transform 0.3s;
+  color: var(--primary-text-color); /* Asegura el color del texto en el feature */
+}
+
+.feature:hover {
+  transform: translateY(-5px);
+}
+
+.services, .premios {
+  display: grid;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.card { /* Esto parece ser un estilo general de tarjeta que podría ser para servicios antiguos o genéricos */
+  background: var(--card-background);
+  padding: 1rem;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px var(--shadow-color);
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+.card h3 {
+  margin-bottom: 0.5rem;
+  color: var(--primary-text-color); /* Asegura el color del título */
+}
+
+.card a {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: var(--secondary-text-color); /* Usa la variable */
+  text-decoration: none;
+}
+
+.card a:hover {
+  text-decoration: underline;
+}
+
+/* Estilos para el contenedor del proyecto */
+.project-item {
+  margin-bottom: 30px; /* Espacio entre cada proyecto */
+  padding: 20px; /* Espacio interno alrededor de cada proyecto */
+  background-color: transparent; /* Sin fondo para que no se noten las cajas */
+}
+/* Estilos para el título del proyecto */
+.project-title {
+  font-size: 2rem; /* Aumentar el tamaño de la letra */
+  margin-bottom: 15px; /* Espacio debajo del título */
+  color: var(--primary-text-color); /* Color del texto */
+}
+/* Estilos para la descripción del proyecto */
+.project-description {
+  padding: 10px; /* Espacio interno alrededor del texto */
+  margin-top: 20px; /* Espacio entre la imagen y la descripción */
+  color: var(--primary-text-color); /* Color del texto */
+  font-size: 1.2rem; /* Aumentar el tamaño de la letra */
+}
+/* Estilos para el carrusel */
+.carousel-wrapper {
+  margin-bottom: 20px; /* Espacio entre el carrusel y la descripción */
+}
+
+/* Swiper carousel styles (si estás usando Swiper, estas reglas son para el antiguo carrusel) */
+.swiper {
+  width: 100%;
+  padding: 2rem 0;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: var(--background-color); /* Ajusta si esto debería tener un fondo diferente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  border-radius: 8px;
+  color: var(--primary-text-color);
+}
+
+.swiper-slide img {
+  width: 50%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+/* /* Estilos para Títulos de Sección  */
+section h2 {
+    font-size: 2.2rem; /* Tamaño del título de sección */
+    color: var(--primary-text-color); /* Color del texto del título */
+    text-align: center;
+    margin-bottom: 3rem; /* Espacio debajo del título */
+    position: relative; /* Para posibles decoraciones si las tienes */
+    padding-bottom: 0.5rem;
+}
+
+/* Opcional: una línea debajo del título como en muchos diseños modernos */
+section h2::after {
+    content: '';
+    display: block;
+    width: 60px; /* Ancho de la línea */
+    height: 4px;
+    background-color: var(--secondary-text-color); /* Color de la línea */
+    margin: 10px auto 0 auto; /* Centrar la línea */
+    border-radius: 2px;
+}
+/* =========================================================
+   Estilos del Carrusel (para proyectos o similar)
+   ========================================================= */
+#proyectos-carousel {
+    background-color: var(--light-bg-color); /* Fondo claro */
+    padding: 3rem 1.5rem; /* Relleno */
+    color: var(--primary-text-color);
+}
+
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+  max-width: 100%;
+  margin: 2rem auto;
+}
+
+.carousel {
+  overflow: hidden;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease; /* Transición suave para el movimiento */
+}
+
+.carousel-item {
+  flex: 0 0 100%; /* Ocupa el 100% del ancho del carrusel por defecto */
+  padding: 0 10px;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 250px; /* <--- Altura fija para todas las imágenes */
+  object-fit: cover; /* <--- Asegura que la imagen cubra el área sin distorsión */
+  object-position: center; /* <--- Centra la imagen dentro del área */
+  border-radius: 8px;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  background: rgb(252, 250, 250); /* Fondo semitransparente */
+  color: rgb(0, 0, 0);
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  z-index: 1;
+  border-radius: 5px;
+}
+
+.carousel-btn.prev { left: 10px; } /* Botón 'anterior' a la izquierda */
+.carousel-btn.next { right: 10px; } /* Botón 'siguiente' a la derecha */
+
+/* --- Media Queries (Responsividad) para el Carrusel --- */
+@media(min-width: 768px) {
+  .carousel-item {
+    flex: 0 0 50%; /* 2 elementos por vista en pantallas medianas */
+  }
+}
+
+@media (min-width: 1024px) {
+  .carousel-item {
+    flex: 0 0 33.333%; /* 3 elementos por vista en pantallas grandes */
+  }
+}
+
+
+#contacto {
+  background: var(--card-background); /* Usando variable para el fondo de contacto */
+  padding: 2rem 1rem;
+  border-radius: 8px;
+  margin-top: 2rem;
+  color: var(--primary-text-color); /* Color del texto de contacto */
+}
+
+#contacto h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: var(--primary-text-color); /* Color del título de contacto */
+}
+
+#contacto address {
+  font-style: normal;
+  line-height: 1.8;
+}
+
+#contacto a {
+  display: block;
+  color: var(--secondary-text-color); /* Usa la variable para enlaces de contacto */
+  text-decoration: none;
+}
+
+#contacto a:hover {
+  text-decoration: underline;
+}
+
+/* --- SECCIÓN DE SERVICIOS/CARDS (NUEVA) --- */
+.services-grid-section {
+    background: var(--light-bg-color); /* Fondo claro para la sección */
+    padding: 3rem 1.5rem; /* Relleno superior e inferior */
+    text-align: center; /* Centra el título H2 */
+}
+
+.services-grid-section h2 {
+    color: var(--primary-text-color); /* Color del título de la sección */
+    font-size: 2.2rem;
+    margin-bottom: 2.5rem; /* Espacio debajo del título */
+}
+
+.services-cards-wrapper {
+    display: grid;
+    gap: 1.5rem; /* Espacio entre las tarjetas */
+    /* Configuración de la cuadrícula responsiva: 1 columna en móvil, luego más */
+    grid-template-columns: 1fr; /* Por defecto, una columna */
+}
+
+.service-card {
+    background: var(--card-background);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px var(--shadow-color); /* Sombra suave */
+    overflow: hidden; /* Asegura que la imagen no se salga de los bordes redondeados */
+    text-align: left; /* Alineación del texto dentro de la tarjeta */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-8px); /* Efecto de elevación al pasar el ratón */
+    box-shadow: 0 8px 25px var(--shadow-color); /* Sombra más pronunciada al pasar el ratón */
+}
+
+.card-image-wrapper {
+    width: 100%;
+    height: 200px; /* Altura fija para las imágenes de las tarjetas */
+    overflow: hidden;
+}
+
+.service-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que la imagen cubra el espacio sin distorsionarse */
+    transition: transform 0.3s ease;
+}
+
+.service-card:hover img {
+    transform: scale(1.05); /* Zoom sutil en la imagen al pasar el ratón */
+}
+
+.service-card h3 {
+    color: var(--primary-text-color); /* Usa la variable primary-text-color para el título de la tarjeta */
+    font-size: 1.4rem;
+    margin: 1rem 1.5rem 0.5rem; /* Relleno alrededor del título */
+}
+
+.service-card p {
+    color: var(--primary-text-color); /* Usa la variable primary-text-color para el párrafo de la tarjeta */
+    font-size: 0.95rem;
+    padding: 0 1.5rem 1.5rem; /* Relleno alrededor del párrafo */
+    margin-bottom: 0; /* Elimina margen inferior extra */
+}
+
+.card-btn {
+    display: block; /* Ocupa todo el ancho disponible */
+    width: calc(100% - 3rem); /* Ancho del botón con padding */
+    margin: 0 1.5rem 1.5rem; /* Margen para centrar y separar del texto */
+    padding: 0.8rem 1.2rem;
+    background-color: var(--primary-color); /* Color de fondo del botón */
+    color: var(--white-color); /* Color del texto del botón */
+    border: none;
+    border-radius: 50px; /* Corregido de '50xppx' a '50px' */
+    cursor: pointer;
+    font-size: 0.9rem; /* **MODIFICACIÓN: Texto más pequeño** */
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center; /* **MODIFICACIÓN: Centra el texto** */
+    text-decoration: none; /* **MODIFICACIÓN: Elimina el subrayado** */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.card-btn:hover {
+    background-color: var(--secondary-color); /* Cambia de color al pasar el ratón */
+    transform: translateY(-2px); /* Pequeña elevación */
+}
+
+/* Media Queries para la sección de servicios/cards */
+@media (min-width: 600px) {
+    .services-cards-wrapper {
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas en pantallas medianas */
+    }
+}
+
+@media (min-width: 992px) {
+    .services-cards-wrapper {
+        grid-template-columns: repeat(4, 1fr); /* 4 columnas en pantallas grandes */
+    }
+}
+
+footer {
+  background: var(--footer-background); /* Usa la variable */
+  color: var(--primary-text-color);
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+/* CSS para el footer de marca y copyright */
+footer {
+  background: var(--footer-background); /* Usar la variable de color del footer */
+  color: var(--primary-text-color); /* Usar la variable de color de texto */
+  padding: 1.5rem 1rem; /* Padding para el footer */
+  text-align: center; /* Centrar el contenido */
+  font-size: 0.9rem;
+  border-top: 1px solid var(--border-color); /* Opcional: un borde superior */
+}
+
+.footer-content {
+  max-width: 1200px; /* Misma anchura que tu .container principal */
+  margin: auto;
+  display: flex; /* Usar flexbox para alinear elementos */
+  flex-direction: column; /* Apilar en dispositivos móviles */
+  align-items: center; /* Centrar horizontalmente */
+  gap: 0.5rem; /* Espacio entre los elementos */
+}
+
+.footer-brand p {
+  margin: 0; /* Eliminar margen predeterminado */
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.footer-logo {
+  height: 30px; /* Ajusta según el tamaño de tu logo */
+  margin-bottom: 0.5rem; /* Espacio debajo del logo si lo usas */
+}
+
+.footer-copyright p {
+  margin: 0; /* Eliminar margen predeterminado */
+}
+
+/* Media Query para pantallas más grandes (opcional, para alinear en línea) */
+@media (min-width: 768px) {
+  .footer-content {
+    flex-direction: row; /* Alinear en fila en pantallas grandes */
+    justify-content: space-between; /* Espaciar entre la marca y el copyright */
+  }
+}
+
+/* SECCIÓN DE IMAGEN PRINCIPAL */
+#hero-main-image {
+  background-image: url('img/CASADD1.jpg'); 
+  
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 600px; /* Altura mínima de la sección. Ajusta según necesites. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--white-color, #fff); /* Usa tu variable de color blanco si la tienes, sino #fff */
+  position: relative;
+  padding: 2rem 1rem;
+  overflow: hidden; /* Asegura que la imagen no desborde */
+}
+
+/* Capa oscura semi-transparente para mejorar la legibilidad del texto */
+#hero-main-image::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3); /* 30% de opacidad. Puedes ajustar. */
+  z-index: 1; /* Asegura que la capa esté debajo del texto */
+}
+
+.hero-content {
+  position: relative; /* Asegura que el contenido esté sobre la capa oscura */
+  z-index: 2; /* Mayor que el z-index de la capa oscura */
+  max-width: 1200px; /* Ajusta este valor al 'max-width' de tu clase '.container' */
+  padding: 2rem; /* Relleno alrededor del texto */
+  margin: 0 auto; /* Centra el contenido si es más estrecho que el max-width del hero-main-image */
+}
+
+.hero-content h1 {
+  font-size: 3.5rem; /* Tamaño del título principal */
+  margin-bottom: 1rem;
+  line-height: 1.1;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Sombra para mejorar la legibilidad */
+}
+
+.hero-content p {
+  font-size: 1.3rem; /* Tamaño del párrafo */
+  margin-bottom: 2rem;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Sombra para el párrafo */
+}
+
+.hero-button {
+  display: inline-block;
+  background-color: var(--secondary-text-color, #0077cc); /* Color de fondo del botón */
+  color: var(--background-color, #fff); /* Color del texto del botón */
+  padding: 0.9rem 2rem;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.hero-button:hover {
+  background-color: var(--primary-text-color, #333); /* Color al pasar el ratón */
+}
+
+/* Media Queries para ajustar la fuente y altura en pantallas pequeñas */
+@media (max-width: 768px) {
+  #hero-main-image {
+    min-height: 450px; /* Altura más compacta para móviles */
+  }
+
+  .hero-content h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero-content p {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #hero-main-image {
+    min-height: 350px;
+  }
+
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+  .hero-content p {
+    font-size: 1rem;
+  }
+}
+/* SECCIÓN DE IMAGEN Y CONTENIDO LATERAL */
+#image-content-section {
+  display: flex; /* Utiliza Flexbox para el diseño de dos columnas */
+  flex-direction: row; /* Por defecto, las columnas estarán en fila */
+  align-items: center; /* Alinea los elementos verticalmente al centro */
+  gap: 3rem; /* Espacio entre la imagen y el texto */
+  padding: 4rem 1rem; /* Relleno alrededor de toda la sección */
+  background-color: var(--background-color); /* Fondo basado en tu tema (claro/oscuro) */
+  color: var(--primary-text-color); /* Color de texto basado en tu tema */
+}
+
+#image-content-section .image-wrapper {
+  flex: 1; /* La imagen ocupará una parte flexible del espacio */
+  min-width: 40%; /* Asegura que la imagen tenga un ancho mínimo en escritorio */
+}
+
+#image-content-section .image-wrapper img {
+  max-width: 100%; /* La imagen será responsive y no se desbordará */
+  height: auto; /* Mantiene la proporción de la imagen */
+  display: block; /* Elimina espacio extra debajo de la imagen */
+  border-radius: 8px; /* Bordes ligeramente redondeados para la imagen */
+  box-shadow: 0 4px 15px var(--shadow-color); /* Sombra sutil para la imagen */
+}
+
+#image-content-section .text-content {
+  flex: 1; /* El contenido de texto ocupará la otra parte flexible del espacio */
+  padding: 0 1rem; /* Pequeño padding interno */
+}
+
+#image-content-section .text-content h2 {
+  font-size: 2.5rem; /* Tamaño del título */
+  margin-bottom: 1.5rem;
+  color: var(--primary-text-color); /* Color del título */
+}
+
+#image-content-section .text-content p {
+  font-size: 1.1rem; /* Tamaño del párrafo */
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  color: var(--text-color, #555); /* Color del párrafo, usa tu variable o un gris */
+}
+
+/* Estilos para el botón de esta sección */
+.section-button {
+  display: inline-block;
+  background-color: var(--secondary-text-color, #0077cc); /* Color de acento de tu tema */
+  color: var(--white-color, #fff); /* Texto blanco o tu variable de color de fondo */
+  padding: 0.9rem 2rem;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 1.5rem; /* Margen superior para separarlo del texto */
+}
+
+.section-button:hover {
+  background-color: var(--primary-color, #0056b3); /* Color de hover del botón */
+  transform: translateY(-2px);
+}
+
+/* Media Queries para diseño responsive (columnas apiladas en pantallas pequeñas) */
+@media (max-width: 992px) {
+  #image-content-section {
+    flex-direction: column; /* Apila la imagen y el texto en columnas */
+    text-align: center; /* Centra el texto */
+    gap: 2rem; /* Reduce el espacio entre elementos apilados */
+  }
+
+  #image-content-section .image-wrapper {
+    min-width: 100%; /* La imagen ocupará todo el ancho disponible */
+  }
+  
+  #image-content-section .text-content {
+    padding: 0; /* Elimina padding interno en móvil si es necesario */
+  }
+
+  #image-content-section .text-content h2 {
+    font-size: 2rem; /* Ajusta el tamaño del título para móviles */
+  }
+
+  #image-content-section .text-content p {
+    font-size: 1rem; /* Ajusta el tamaño del párrafo para móviles */
+  }
+}
+/* Sección Sobre Nosotros */
+#sobre-nosotros.about-us-hero-style {
+
+  min-height: auto; /* La altura será definida por el contenido y el padding */
+  display: flex;
+  flex-direction: column; /* Organiza el contenido en columna: título y cuadrícula */
+  align-items: center; /* Centra el contenido horizontalmente (título y cuadrícula) */
+  justify-content: center; /* Centra el contenido verticalmente si el espacio lo permite */
+  position: relative;
+  padding: 5rem 1.5rem; /* Relleno general de la sección */
+  text-align: center;
+  overflow: hidden;
+  background-color: var(--background-color); /* Utiliza el color de fondo general de tu sitio */
+  color: var(--primary-text-color); /* Color de texto principal para un fondo claro */
+}
+
+
+#sobre-nosotros.about-us-hero-style {
+  min-height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 5rem 1.5rem 8rem; /* Aumentado el padding-bottom a 8rem */
+  text-align: center;
+  overflow: hidden;
+  background-color: var(--background-color);
+  color: var(--primary-text-color);
+}
+
+/* Título de la sección "Sobre Nosotros" */
+#sobre-nosotros.about-us-hero-style h2 {
+  color: var(--primary-text-color);
+  margin-bottom: 4rem;
+}
+
+/* Línea decorativa debajo del título de la sección "Sobre Nosotros" */
+#sobre-nosotros.about-us-hero-style h2::after {
+    background-color: var(--secondary-text-color);
+}
+
+/* Cuadrícula para las tarjetas del equipo */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Estilos de cada tarjeta de persona en el equipo */
+.person-card {
+  background-color: var(--card-background);
+  padding: 2rem;
+  border-radius: 25px; /* Tarjetas más redondeadas */
+  box-shadow: 0 10px 25px var(--shadow-color);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: var(--primary-text-color);
+}
+
+/* Efecto al pasar el ratón sobre la tarjeta de persona */
+.person-card:hover {
+  transform: translateY(-15px);
+  box-shadow: 0 15px 35px var(--shadow-color);
+}
+
+/* Imagen de perfil en la tarjeta de persona */
+.person-card img {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%; /* La imagen sigue siendo circular */
+  object-fit: cover;
+  margin-bottom: 1.5rem;
+  border: 5px solid var(--secondary-text-color);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* Nombre de la persona en la tarjeta */
+.person-card h3 {
+  font-size: 1.8rem;
+  margin-bottom: 0.75rem;
+  color: var(--primary-text-color);
+}
+
+/* Descripción de la persona en la tarjeta */
+.person-card p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+/* Media Queries para diseño responsive */
+@media (max-width: 768px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .person-card img {
+      width: 120px;
+      height: 120px;
+  }
+  .person-card h3 {
+      font-size: 1.5rem;
+  }
+  .person-card p {
+      font-size: 1rem;
+  }
+}
+
+#nuestra-identidad {
+  display: flex;
+  flex-direction: row-reverse; /* CAMBIO AQUÍ: La imagen ahora estará a la derecha */
+  align-items: center;
+  gap: 3rem;
+  padding: 4rem 1rem;
+  background-color: var(--background-color);
+  color: var(--primary-text-color);
+}
+
+#nuestra-identidad .image-wrapper {
+  flex: 1;
+  min-width: 40%;
+}
+
+#nuestra-identidad .image-wrapper img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px var(--shadow-color);
+}
+
+#nuestra-identidad .text-content {
+  flex: 1;
+  padding: 0 1rem;
+}
+
+#nuestra-identidad .text-content h2 {
+  font-size: 2.5rem; /* El tamaño de fuente para el título se mantiene consistente */
+  margin-bottom: 1.5rem;
+  color: var(--primary-text-color);
+  /* La fuente (font-family) se hereda del 'body', lo que asegura consistencia */
+}
+
+#nuestra-identidad .text-content p {
+  font-size: 1.1rem; /* El tamaño de fuente para el párrafo se mantiene consistente */
+  line-height: 1.7; /* La altura de línea para el párrafo se mantiene consistente */
+  margin-bottom: 1rem;
+  color: var(--text-color, #555);
+  /* La fuente (font-family) se hereda del 'body', lo que asegura consistencia */
+}
+
+/* Media Queries para diseño responsive (columnas apiladas en pantallas pequeñas) */
+@media (max-width: 992px) {
+  #nuestra-identidad {
+    flex-direction: column; /* En móvil, vuelven a apilarse, manteniendo el texto arriba y la imagen abajo por el orden del HTML */
+    text-align: center;
+    gap: 2rem;
+  }
+
+  #nuestra-identidad .image-wrapper {
+    min-width: 100%;
+  }
+
+  #nuestra-identidad .text-content {
+    padding: 0;
+  }
+
+  #nuestra-identidad .text-content h2 {
+    font-size: 2rem;
+  }
+
+  #nuestra-identidad .text-content p {
+    font-size: 1rem;
+  }
+}
+/* En tu style.css */
+.carousel-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden; /* Esto es vital para ocultar las imágenes fuera de vista */
+    border-radius: 8px;
+}
+
+
+/* --- Estilos para las Nuevas Cajas Verticales --- */
+#cajas-verticales {
+    padding: 4rem 1rem;
+    background-color: var(--background-color); /* O el color de fondo que prefieras */
+    display: flex;
+    flex-direction: column; /* Apila las cajas verticalmente */
+    gap: 4rem; /* Espacio entre cada caja */
+}
+
+.vertical-box {
+    display: flex;
+    align-items: center;
+    gap: 2rem; /* Espacio entre la imagen y el texto */
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px var(--shadow-color);
+    background-color: var(--card-background);
+    color: var(--primary-text-color);
+}
+
+.vertical-box .image-wrapper {
+    flex: 1; /* La imagen ocupa una parte flexible del espacio */
+    min-width: 40%; /* Ancho mínimo para la imagen en desktop */
+}
+
+.vertical-box .image-wrapper img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px var(--shadow-color);
+}
+
+.vertical-box .text-content {
+    flex: 1; /* El texto ocupa una parte flexible del espacio */
+    padding: 0 1rem; /* Pequeño padding dentro del texto */
+}
+
+.vertical-box .text-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary-text-color);
+}
+
+.vertical-box .text-content p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+/* Estilo para las cajas 'text-content-style' (Texto Izquierda, Imagen Derecha por defecto) */
+.vertical-box.text-content-style {
+    flex-direction: row; /* Texto a la izquierda, Imagen a la derecha */
+}
+
+/* Estilo para las cajas 'nuestra-identidad-style' (Imagen Izquierda, Texto Derecha por defecto) */
+.vertical-box.nuestra-identidad-style {
+    flex-direction: row-reverse; /* Imagen a la izquierda, Texto a la derecha */
+}
+
+
+/* Media Queries para adaptar el diseño en pantallas más pequeñas */
+@media (max-width: 992px) {
+    .vertical-box {
+        flex-direction: column; /* Apila imagen y texto en columnas en pantallas pequeñas */
+        text-align: center; /* Centra el texto en móvil */
+    }
+
+    .vertical-box .image-wrapper,
+    .vertical-box .text-content {
+        min-width: unset; /* Reinicia el min-width */
+        width: 100%; /* Ocupa todo el ancho disponible */
+        padding: 0; /* Elimina el padding extra para el texto en móvil */
+    }
+
+    .vertical-box .text-content h2 {
+        font-size: 2rem; /* Reduce el tamaño del título en móvil */
+        margin-top: 1.5rem; /* Añade margen superior al título apilado */
+    }
+}
+
+@media (max-width: 576px) {
+    #cajas-verticales {
+        padding: 2rem 0.5rem; /* Reduce el padding general */
+        gap: 2rem; /* Reduce el espacio entre cajas */
+    }
+    .vertical-box {
+        padding: 1rem; /* Reduce el padding interno de las cajas */
+    }
+}
+
+/* --- Estilos para la Nueva Sección de Acordeón --- */
+#acordeon-servicios {
+    padding: 4rem 1rem;
+    background-color: var(--light-bg-color); /* Usa una variable de color de fondo existente o define una nueva */
+    color: var(--primary-text-color);
+    text-align: center;
+}
+
+#acordeon-servicios h2 {
+    font-size: 3rem;
+    margin-bottom: 3rem;
+    color: var(--primary-text-color);
+}
+
+.accordion-item {
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    overflow: hidden; /* Asegura que el contenido oculto no sea visible */
+    box-shadow: 0 2px 10px var(--shadow-color);
+    transition: box-shadow 0.3s ease;
+}
+
+.accordion-item:hover {
+    box-shadow: 0 5px 15px var(--shadow-color);
+}
+
+.accordion-header {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    padding: 1.2rem 1.5rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.3rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.accordion-header:hover {
+    background-color: var(--secondary-color);
+}
+
+.accordion-header i {
+    transition: transform 0.3s ease;
+}
+
+.accordion-header.active i {
+    transform: rotate(45deg); /* Cambia el icono de + a X o a un giro */
+}
+
+.accordion-content {
+    max-height: 0; /* Inicialmente oculto */
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
+    padding: 0 1.5rem; /* Padding horizontal inicial */
+    text-align: left; /* Alinea el texto a la izquierda */
+    color: var(--text-color);
+}
+
+.accordion-content.active {
+    max-height: 500px; /* Suficiente altura para mostrar el contenido */
+    padding: 1.5rem; /* Padding cuando está activo */
+}
+
+.accordion-content p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+.accordion-content p:last-child {
+    margin-bottom: 0; /* Elimina el margen inferior del último párrafo */
+}
+
+/* Media Queries para acordeón */
+@media (max-width: 768px) {
+    #acordeon-servicios h2 {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .accordion-header {
+        font-size: 1.1rem;
+        padding: 1rem;
+    }
+
+    .accordion-content.active {
+        padding: 1rem;
+    }
+
+    .accordion-content p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Sección de información (ej. para tarjetas) */
+.info-section {
+    margin-top: 40px;
+    padding: 30px;
+    background-color: var(--section-bg-light);
+    border-radius: 8px;
+}
+
+.info-section h2 {
+    color: var(--heading-color);
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.info-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 4px 10px var(--card-shadow);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px var(--card-shadow);
+}
+
+.info-card h3 {
+    color: var(--secondary-text-color); /* Puedes usar un color diferente si lo deseas */
+    margin-bottom: 10px;
+    font-size: 1.5em;
+}
+
+.info-card p {
+    font-size: 0.95em;
+    color: var(--text-color-secondary);
+}
+
+/* Media Queries para responsividad */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    .info-section {
+        padding: 20px;
+    }
+
+    .info-card {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.8em;
+    }
+
+    .info-section h2 {
+        font-size: 1.8em;
+    }
+}
+/* Estilos para las imágenes dentro de cada info-card */
+.info-card-image {
+    display: block; /* Para que margin: auto funcione */
+    width: 100px; /* Tamaño de la imagen */
+    height: 100px; /* Asegura que sea un círculo perfecto */
+    border-radius: 50%; /* Hace la imagen redonda */
+    object-fit: cover; /* Recorta la imagen para que quepa sin distorsión */
+    margin: 0 auto 15px auto; /* Centra la imagen y le da margen inferior */
+    border: 3px solid var(--secondary-text-color); /* Borde alrededor de la imagen */
+    box-shadow: 0 2px 5px var(--shadow-color); /* Sombra para destacar */
+}
+
+/* Puedes ajustar el padding superior de .info-card si la imagen queda muy pegada al borde superior */
+.info-card {
+    padding-top: 25px; /* Asegura que haya suficiente espacio para la imagen */
+    text-align: center; /* Asegura que el contenido (incluida la imagen) esté centrado */
+}
+
+/* Media Queries para ajustar el tamaño de la imagen en móviles si es necesario */
+@media (max-width: 768px) {
+    .info-card-image {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 10px;
+    }
+}
+
+/* Contenedor principal de la página de contacto para ajustes específicos */
+.contact-page-container {
+    padding-top: 10px; /* **MODIFICACIÓN: Reduce el padding superior a 10px** */
+    padding-bottom: 10px; /* **MODIFICACIÓN: Reduce el padding inferior a 10px** */
+}
+
+/* Introducción del formulario de contacto (si la vuelves a usar) */
+.contact-intro {
+    text-align: center;
+    margin-bottom: 30px; 
+    font-size: 1.1em; 
+    max-width: 700px; 
+    margin-left: auto;
+    margin-right: auto;
+    color: var(--text-color);
+}
+
+/* Sección principal que contiene el formulario y la información lateral */
+.contact-form-section {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 20px; 
+    justify-content: center;
+    align-items: flex-start; 
+    
+    background-color: transparent; 
+    box-shadow: none; 
+    
+    margin: 0; /* Elimina márgenes externos */
+    padding: 0; /* Elimina paddings internos de esta sección */
+    
+    border-radius: 8px; 
+}
+
+/* Contenedor del formulario */
+.form-wrapper {
+    flex: 2; 
+    min-width: 350px; 
+    max-width: 650px; 
+    padding: 15px; 
+    background-color: var(--card-background); 
+    border-radius: 8px;
+    box-shadow: 0 2px 8px var(--shadow-color); 
+}
+
+.contact-form .form-group {
+    margin-bottom: 10px; 
+}
+
+.contact-form label {
+    display: block; 
+    margin-bottom: 5px; 
+    font-weight: bold;
+    color: var(--primary-text-color);
+    font-size: 1em; 
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form input[type="tel"],
+.contact-form textarea {
+    width: calc(100% - 20px); 
+    padding: 8px; 
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-size: 0.95em; 
+    color: var(--text-color);
+    background-color: var(--background-color); 
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: var(--secondary-text-color); 
+    box-shadow: 0 0 5px var(--secondary-text-color); 
+    outline: none; 
+}
+
+.contact-form textarea {
+    resize: vertical; 
+}
+
+/* Estilo para el botón de envío del formulario */
+.contact-form .submit-button {
+    width: auto; 
+    padding: 10px 20px; 
+    margin: 15px auto 0 auto; 
+    display: block; 
+}
+
+
+/* Información de contacto lateral */
+.contact-info-aside {
+    flex: 1; 
+    min-width: 280px; 
+    max-width: 450px; 
+    padding: 15px; 
+    background-color: var(--card-background); 
+    border-radius: 8px;
+    box-shadow: 0 2px 8px var(--shadow-color); 
+    text-align: center; 
+    display: flex; 
+    flex-direction: column;
+    justify-content: space-between; 
+}
+
+.contact-info-aside h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px; 
+    font-size: 1.5em; 
+}
+
+.contact-info-aside p {
+    margin-bottom: 8px; 
+    color: var(--text-color);
+    font-size: 0.95em; 
+    display: flex; 
+    align-items: center;
+    justify-content: center; 
+}
+
+.contact-info-aside p i {
+    margin-right: 8px; 
+    color: var(--secondary-text-color); 
+    font-size: 1.1em; 
+}
+
+.contact-info-aside a {
+    color: var(--secondary-text-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-info-aside a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+.contact-info-aside .social-links {
+    margin-top: 15px; 
+    margin-bottom: 20px; 
+    display: flex;
+    justify-content: center;
+    gap: 15px; 
+}
+
+.contact-info-aside .social-links a {
+    font-size: 1.6em; 
+    color: var(--dark-grey); 
+    transition: color 0.3s ease;
+}
+
+.contact-info-aside .social-links a:hover {
+    color: var(--secondary-color); 
+}
+
+/* Estilos para el contenedor de la fotografía debajo del contacto directo */
+.contact-photo-container {
+    text-align: center; 
+    margin-top: auto; 
+}
+
+.contact-footer-image {
+    max-width: 100%; 
+    height: auto; 
+    display: block; 
+    margin: 0 auto; 
+    border-radius: 8px; 
+    object-fit: cover; 
+    box-shadow: 0 2px 8px var(--shadow-color); 
+}
+
+
+/* Media Queries para responsividad */
+@media (max-width: 992px) {
+    .contact-form-section {
+        flex-direction: column; 
+        align-items: center; 
+        gap: 15px; 
+    }
+
+    .form-wrapper,
+    .contact-info-aside {
+        max-width: 95%; 
+        min-width: unset;
+        width: 100%; 
+        padding: 15px; 
+    }
+
+    .contact-form .submit-button {
+        width: 100%; 
+    }
+}
+
+@media (max-width: 600px) {
+    .contact-page-container {
+        padding: 10px; /* **MODIFICACIÓN: Asegura 10px padding también en móviles** */
+    }
+
+    .contact-form-section {
+        padding: 0; 
+        margin: 0;  
+    }
+
+    .form-wrapper,
+    .contact-info-aside {
+        padding: 15px; 
+    }
+
+    .contact-form input[type="text"],
+    .contact-form input[type="email"],
+    .contact-form input[type="tel"],
+    .contact-form textarea {
+        padding: 6px; 
+    }
+
+    .contact-info-aside p {
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 768px) {
+  .vertical-box {
+    flex-direction: column-reverse !important; /* Fuerza el orden: texto arriba, imagen abajo */
+    text-align: center;
+  }
+
+  .vertical-box .image-wrapper,
+  .vertical-box .text-content {
+    width: 100%;
+    padding: 0;
+  }
+
+  .vertical-box .text-content h2 {
+    font-size: 1.8rem;
+    margin-top: 1.5rem;
+  }
+
+  .vertical-box .text-content p {
+    font-size: 1rem;
+  }
+}
+
+
+@media (max-width: 767px) {
+  nav.open ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas */
+    grid-template-rows: repeat(3, auto);   /* 3 filas */
+    gap: 1rem;
+    padding: 1rem 0;
+    text-align: center;
+  }
+
+  nav.open li {
+    margin: 0;
+  }
+
+  nav.open ul li a {
+    display: block;
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+
+  nav.open #dark-mode-toggle {
+    all: unset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.6rem;
+    grid-column: 2; /* Segunda columna */
+    grid-row: 3;    /* Tercera fila */
+    color: var(--primary-text-color);
+    padding: 0.5rem;
+  }
+}
+
+
+
+
